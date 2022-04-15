@@ -13,6 +13,7 @@ public class Option {
     @Column
     private String name;
 
-    @Column
-    private Long productId;
+    @ManyToOne
+    @JoinColumn
+    private Product product;
 }

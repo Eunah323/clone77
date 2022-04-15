@@ -26,8 +26,7 @@ public class Product {
     @Column
     private String price;
 
-    @OneToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "product")
     private List<Option> options;
 
 
