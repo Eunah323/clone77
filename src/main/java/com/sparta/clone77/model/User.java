@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
@@ -25,6 +26,9 @@ public class User{
 
     @Column(nullable = false)
     private String password;
+
+    @OneToOne
+    private Cart cart;
 
     @Formula("(select count(1) from orders ordercount where ordercount.user_id = id)")
     private int orderCount;
