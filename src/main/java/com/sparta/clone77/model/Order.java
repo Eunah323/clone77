@@ -7,19 +7,17 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private int totalPrice;
-
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
+    @Column(nullable = false)
+    private int totalPrice;
 
 }

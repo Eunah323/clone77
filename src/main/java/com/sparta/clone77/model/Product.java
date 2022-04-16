@@ -24,14 +24,9 @@ public class Product {
     private String content;
 
     @Column
-    private String price;
+    private int price; // price는 int 자료형
 
     @OneToMany(mappedBy = "product")
     private List<Option> options;
-
-    @OneToOne(mappedBy = "product")
-    private OrderItem orderItem;
-
-
 
 }

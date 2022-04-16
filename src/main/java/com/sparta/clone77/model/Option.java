@@ -13,7 +13,7 @@ public class Option {
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
+
 }
