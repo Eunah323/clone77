@@ -12,7 +12,7 @@ public class Cart {
     @Id
     private Long id;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "cart")
     private User user;
 
     @OneToMany(mappedBy = "cart")
