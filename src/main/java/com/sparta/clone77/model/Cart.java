@@ -1,7 +1,5 @@
 package com.sparta.clone77.model;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,5 +15,3 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
-
-}
