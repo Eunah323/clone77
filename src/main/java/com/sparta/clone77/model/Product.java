@@ -29,6 +29,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Option> options;
 
+    @OneToOne(mappedBy = "product")
+    private OrderItem orderItem;
+
 
 
 }

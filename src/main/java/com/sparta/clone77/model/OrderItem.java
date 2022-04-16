@@ -18,6 +18,10 @@ public class OrderItem {
     @ManyToOne
     private Cart cart;
 
+    @OneToOne
+    @JoinColumn
+    private Product product;
+
 
 
 }

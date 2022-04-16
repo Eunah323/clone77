@@ -1,5 +1,6 @@
 package com.sparta.clone77.model;
 
+import com.sparta.clone77.dto.UserRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
@@ -25,11 +26,8 @@ public class User{
     @Column(nullable = false)
     private String password;
 
-    @Formula("(SELECT count(1) FROM orders ordercount WHERE ordercount.order_id = id)")
+    @Formula("(select count(1) from orders ordercount where ordercount.user_id = id)")
     private int orderCount;
-
-
-
 
 
     public User(String username, String name, String password, int orderCount) {
@@ -37,6 +35,12 @@ public class User{
         this.name = name;
         this.password = password;
         this.orderCount = orderCount;
+    }
+
+    public User(UserRequestDto requestDto) {
+        this.username = requestDto.getUsername();
+        this.password = requestDto.getPassword();
+        this.name = requestDto.getName();
     }
 
 }
