@@ -1,5 +1,7 @@
 package com.sparta.clone77.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,9 +12,10 @@ public class Cart {
     @Id
     private Long id;
 
-    @Column
-    private int orderCount;
+    @ManyToOne
+    private User user;
 
     @OneToMany(mappedBy = "cart")
-    private List<OrderItem> orderItems;
+    private List<CartItem> cartItems;
+
 }
