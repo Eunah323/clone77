@@ -23,10 +23,11 @@ public class CartService {
 
     public StatusDto addCart(CartRequestDto requestDto, UserDetailsImpl userDetails){
         // 유저 카트 내에 카트 아이템 추가 및 반환
-        return new StatusDto(cartItemRepository.save(new CartItem(productRepository
+        cartItemRepository.save(new CartItem(productRepository
                 .findById(requestDto.getProductId())
                 .orElseThrow( () -> new NullPointerException("상품정보가 존재하지 않습니다.")),
-                cartRepository.findByUser(userDetails.getUser()))));
+                cartRepository.findByUser(userDetails.getUser())));
+        return new StatusDto("장바구니에 상품 추가 완료");
     }
 
     public CartResponseDto getCart(UserDetailsImpl userDetails){
@@ -34,8 +35,9 @@ public class CartService {
     }
 
     public StatusDto delCart(UserDetailsImpl userDetails){
-        return new StatusDto(cartItemRepository.deleteAllByCart(
-                cartRepository.findByUser(userDetails.getUser())));
+        cartItemRepository.deleteAllByCart(
+                cartRepository.findByUser(userDetails.getUser()));
+        return new StatusDto("주문 및 장바구니 삭제 완료");
     }
 
 }
