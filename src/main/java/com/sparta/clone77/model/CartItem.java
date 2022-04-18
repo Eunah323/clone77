@@ -21,7 +21,7 @@ public class CartItem {
     private Product product;
 
     @Column(nullable = false)
-    private int quantity;
+    private int quantity = 0;
 
     // 옵션 입력 필요
     @Column
