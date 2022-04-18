@@ -30,7 +30,7 @@ public class UserResponseHandler {
         Map<String,Object> response = new HashMap<>();
         response.put("status", status);
         response.put("http", String.valueOf(httpStatus));
-        response.put("message",message);
+        response.put("msg",message);
         return response;
     }
 }

@@ -94,6 +94,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 어떤 요청이든 '인증'
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
@@ -112,8 +114,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedOrigin("http://192.168.219.100:8080");
         configuration.addAllowedOrigin("http://192.168.219.100:3000");
-        configuration.addAllowedOrigin("http://54.180.90.59:3000");
-        configuration.addAllowedOrigin("http://54.180.90.59:8080");
+        configuration.addAllowedOrigin("http://3.39.23.124:3000");
+        configuration.addAllowedOrigin("http://3.39.23.124:8080");
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop");
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop:8080");
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop:3000");
