@@ -1,8 +1,6 @@
 package com.sparta.clone77.model;
 
 import lombok.Getter;
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import java.util.List;
 
