@@ -26,6 +26,13 @@ public class Product {
     @Column
     private int price; // price는 int 자료형
 
+    // 정보제공을 위해서는 카테코리와 서빙에 대한 자료가 필요하여 추가하였습니다.
+    @Column
+    private String category;
+
+    @Column
+    private String serving;
+
     @OneToMany(mappedBy = "product")
     private List<Option> options;
 
