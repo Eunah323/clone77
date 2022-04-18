@@ -2,12 +2,15 @@ package com.sparta.clone77.dto;
 
 import com.sparta.clone77.model.CartItem;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 @NoArgsConstructor
 public class StatusDto {
 
+    private boolean status = true;
+    private String http = String.valueOf(HttpStatus.OK);
     private String message;
 
     public StatusDto(CartItem cartItem){
