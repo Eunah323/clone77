@@ -1,11 +1,11 @@
 package com.sparta.clone77.dto;
 
 import com.sparta.clone77.model.CartItem;
-import com.sparta.clone77.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,21 +18,18 @@ public class CartItemDto {
     private int quantity;
     private int price;
     private String serving;
-    private Map<String, Boolean> productType = new HashMap<>();
+    private ProductTypeDto productType;
 
-    public CartItemDto(CartItem item, Product product){
-        this.productId = product.getId();
-        this.name = product.getName();
-        this.image = product.getImage();
+    public CartItemDto(CartItem item){
+        this.productId = item.getProduct().getId();
+        this.name = item.getProduct().getName();
+        this.image = item.getProduct().getImage();
         this.quantity = item.getQuantity();
-        this.price = product.getPrice();
-        this.serving = product.getServing();
-        this.option = item.getOptions();
-
-        if ( this.name.contains("초신선") ) { productType.put("fresh",true); }
-        else { productType.put("fresh",false); }
-        if ( this.name.contains("무항생") ) { productType.put("zero",true); }
-        else { productType.put("zero",false); }
+        this.price = item.getProduct().getPrice();
+        this.serving = item.getProduct().getServing();
+        this.option = item.getOption();
+        if ( this.name.contains("초신선") ) { productType.setFresh(true); }
+        if ( this.name.contains("무항생") ) { productType.setZero(true); }
     }
 
 }

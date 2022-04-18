@@ -1,16 +1,20 @@
 package com.sparta.clone77.dto;
 
-import lombok.Getter;
+import com.sparta.clone77.model.CartItem;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
-@Getter
+
+import java.util.List;
+
 @NoArgsConstructor
 public class StatusDto {
 
-    private boolean status = true;
-    private String http = String.valueOf(HttpStatus.OK);
     private String message;
 
-    public StatusDto(String message) { this.message = message; }
+    public StatusDto(CartItem cartItem){
+        this.message = "장바구니에 상품 추가 완료";
+    }
 
+    public StatusDto(List<Long> id){
+        this.message = "주문 및 장바구니 삭제 완료";
+    }
 }
