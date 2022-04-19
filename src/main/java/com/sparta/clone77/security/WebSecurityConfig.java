@@ -176,9 +176,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         skipPathList.add("GET,/user/kakao/callback");
 
-
-
-
         skipPathList.add("GET,/");
         skipPathList.add("GET,/api/products/**");
         skipPathList.add("GET,/api/products");
