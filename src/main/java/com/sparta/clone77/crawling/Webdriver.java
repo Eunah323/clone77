@@ -1,7 +1,7 @@
 package com.sparta.clone77.crawling;
 
 import com.sparta.clone77.dto.ReturnTwoDto;
-import com.sparta.clone77.model.Product;
+import com.sparta.clone77.model.OriginalProduct;
 import com.sparta.clone77.model.Selects;
 import lombok.Getter;
 import org.json.simple.JSONArray;
@@ -49,7 +49,7 @@ public class Webdriver {
     }
 
     public ReturnTwoDto useDriver(String url) {
-        List<Product> productList = new ArrayList<>();
+        List<OriginalProduct> originalProductList = new ArrayList<>();
         ReturnTwoDto returnTwoDto = new ReturnTwoDto();
         try {
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다.)
@@ -71,7 +71,7 @@ public class Webdriver {
         JSONParser parser = new JSONParser();
         Object obj;
         List<Object> objectList = new ArrayList<>();
-        List<Product> productList = new ArrayList<>();
+        List<OriginalProduct> originalProductList = new ArrayList<>();
         ReturnTwoDto returnTwoDto = new ReturnTwoDto();
         List<Selects> selectsList = new ArrayList<>();
         try {
@@ -98,25 +98,25 @@ public class Webdriver {
                 String displayid = productJson.get("displayid").toString();
                 Object selectsObject = productJson.get("selects");
 
-                Product product = new Product(detail_name, list_thumbnail_web, list_tag, list_option, list_price, category, displayid);
+                OriginalProduct originalProduct = new OriginalProduct(detail_name, list_thumbnail_web, list_tag, list_option, list_price, category, displayid);
 
                 JSONArray selects = (JSONArray)selectsObject;
 
                 for(Object select : selects) {
                     JSONObject selectJson = (JSONObject) select;
-                    Selects tempSelects = new Selects(displayid, selectJson.get("name").toString(), product);
+                    Selects tempSelects = new Selects(displayid, selectJson.get("name").toString(), originalProduct);
                     selectsList.add(tempSelects);
                 }
-                product.addSelect(selectsList);
+                originalProduct.addSelect(selectsList);
 
-                productList.add(product);
-                returnTwoDto = new ReturnTwoDto(productList, selectsList);
+                originalProductList.add(originalProduct);
+                returnTwoDto = new ReturnTwoDto(originalProductList, selectsList);
             }
 
         } catch (ParseException e) {
             e.printStackTrace();
         } finally {
-            System.out.println(productList.size());
+            System.out.println(originalProductList.size());
         }
         return returnTwoDto;
     }

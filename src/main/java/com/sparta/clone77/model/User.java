@@ -29,11 +29,7 @@ public class User{
     @Column(nullable = false)
     private String email;
 
-    @OneToOne
-    private Cart cart;
 
-    @Formula("(select count(1) from orders ordercount where ordercount.user_id = id)")
-    private int orderCount;
 
     @Column(unique = true)
     private Long kakaoId;

@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Product {
+public class OriginalProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +41,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Selects> selectsList;
 
-    public Product(String detail_name, String list_thumbnail_web, String list_tag, String list_option, String list_price, String category, String displayid) {
+    public OriginalProduct(String detail_name, String list_thumbnail_web, String list_tag, String list_option, String list_price, String category, String displayid) {
         this.detail_name = detail_name;
         this.list_thumbnail_web = list_thumbnail_web;
         this.list_tag = list_tag;
