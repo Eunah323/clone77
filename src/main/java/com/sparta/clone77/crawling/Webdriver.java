@@ -25,7 +25,7 @@ public class Webdriver {
     private WebDriver driver;
 
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver";      // Properties 설정
-    public static String WEB_DRIVER_PATH = "/Users/imchahyeog/Desktop/hanghae99/clone/crawling/chromedriver/chromedriver";       // 다운받은 크롬드라이버 경로
+    public static String WEB_DRIVER_PATH = "/Users/PC/Desktop/sparta/clone77/chromedriver/chromedriver";       // 다운받은 크롬드라이버 경로
 
     public Webdriver() {
         // System Property SetUp

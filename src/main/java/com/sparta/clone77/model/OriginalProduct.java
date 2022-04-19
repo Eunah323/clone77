@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "originalproduct")
 public class OriginalProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,7 @@ public class OriginalProduct {
 
     // selects(드롭다운항목)
     @JsonManagedReference
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "originalproduct")
     private List<Selects> selectsList;
 
     public OriginalProduct(String detail_name, String list_thumbnail_web, String list_tag, String list_option, String list_price, String category, String displayid) {
