@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class LoginResponseDto {
-    private String is_login = "true";
+    private String is_login;
     private String username;
     private String nickname;
 
