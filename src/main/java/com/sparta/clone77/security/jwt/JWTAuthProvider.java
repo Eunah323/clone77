@@ -28,6 +28,7 @@ public class JWTAuthProvider implements AuthenticationProvider {
         String token = (String) authentication.getPrincipal();
         String username = jwtDecoder.decodeUsername(token);
         String name = jwtDecoder.decodeName(token);
+        System.out.println("디코딩한유저네임"+ username);
 
         // TODO: API 사용시마다 매번 User DB 조회 필요
         //  -> 해결을 위해서는 UserDetailsImpl 에 User 객체를 저장하지 않도록 수정
@@ -36,7 +37,7 @@ public class JWTAuthProvider implements AuthenticationProvider {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find " + username));;
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
-        System.out.println("jwt어스프로바이더");
+        System.out.println("jwt어스프로바이더의 유저디테일"+userDetails.getUsername());
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
