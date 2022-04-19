@@ -43,7 +43,8 @@ public class CartService {
     // 장바구니 조회
     public CartResponseDto getCart(UserDetailsImpl userDetails){
 
-        Cart cart = cartRepository.findCartFetchJoin(userDetails.getUser().getId());
+        Cart cart = cartRepository.findByUserId(userDetails.getUser().getId())
+                .orElseThrow(() -> new NullPointerException("오류"));
         List<Product> products = new ArrayList<>();
         for ( CartItem item : cart.getCartItems() ){
             products.add(productRepository
