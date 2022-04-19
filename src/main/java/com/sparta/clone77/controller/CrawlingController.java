@@ -18,10 +18,10 @@ public class CrawlingController {
 
     private final CrawlingService crawlingService;
 
-    @GetMapping("/api/productss")
-    public List<OriginalProduct> getProducts() {
-        return crawlingService.getProducts();
-    }
+//    @GetMapping("/api/products")
+//    public List<OriginalProduct> getProducts() {
+//        return crawlingService.getProducts();
+//    }
 
     @GetMapping("/api/products/{categoryName}")
     public List<OriginalProduct> getCategoryProducts(@PathVariable String categoryName) {
