@@ -1,32 +1,57 @@
 package com.sparta.clone77.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter // get 함수를 일괄적으로 만들어줍니다.
-@NoArgsConstructor // 기본 생성자를 만들어줍니다.
-@Entity // DB 테이블 역할을 합니다.
+@Getter
+@Entity
+@NoArgsConstructor
 public class Product {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String name;
+    //상품 이름
+    private String detail_name;
 
-    @Column
-    private String image;
+    // 상품이미지
+    private String list_thumbnail_web;
 
-    @Column
-    private String content;
+    // 무항생제 여부
+    private String list_tag;
 
-    @Column
-    private int price; // price는 int 자료형
+    // 상품 옵션
+    private String list_option;
 
+    // 상품 가격 정보 ex) 16,800원/600g
+    private String list_price;
+
+    // 상품 카테고리
+    private String category;
+
+    // displayid
+    private String displayid;
+
+    // selects(드롭다운항목)
+    @JsonManagedReference
     @OneToMany(mappedBy = "product")
-    private List<Option> options;
+    private List<Selects> selectsList;
 
+    public Product(String detail_name, String list_thumbnail_web, String list_tag, String list_option, String list_price, String category, String displayid) {
+        this.detail_name = detail_name;
+        this.list_thumbnail_web = list_thumbnail_web;
+        this.list_tag = list_tag;
+        this.list_option = list_option;
+        this.list_price = list_price;
+        this.category = category;
+        this.displayid = displayid;
+    }
+
+    public void addSelect(List<Selects> selectsList) {
+        this.selectsList = selectsList;
+    }
 }
