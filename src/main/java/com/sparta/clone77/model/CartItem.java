@@ -1,5 +1,7 @@
 package com.sparta.clone77.model;
 
+import com.sparta.clone77.dto.CartRequestDto;
+import com.sparta.clone77.dto.CartUpdateReqeustDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,23 +16,28 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cart cart;
 
-    @ManyToOne
-    private Product product;
+    @Column(nullable = false)
+    private Long productId;
 
     @Column(nullable = false)
     private int quantity = 0;
 
-    // 옵션 입력 필요
-    @Column
+    @Column(nullable = false)
     private String option;
 
-    public CartItem(Product product, Cart cart) {
+    public CartItem(Cart cart, CartRequestDto requestDto) {
         this.cart = cart;
-        this.product = product;
+        this.productId = requestDto.getProductId();
+        this.option = requestDto.getOption();
         this.quantity++;
+    }
+
+    public void update(CartUpdateReqeustDto reqeustDto){
+        if (reqeustDto.isOperator()){ this.quantity++; }
+        else { this.quantity--; }
     }
 
 }

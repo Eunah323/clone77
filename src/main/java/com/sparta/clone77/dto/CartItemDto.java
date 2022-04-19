@@ -1,6 +1,7 @@
 package com.sparta.clone77.dto;
 
 import com.sparta.clone77.model.CartItem;
+import com.sparta.clone77.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,13 +20,13 @@ public class CartItemDto {
     private String serving;
     private Map<String, Boolean> productType = new HashMap<>();
 
-    public CartItemDto(CartItem item){
-        this.productId = item.getProduct().getId();
-        this.name = item.getProduct().getName();
-        this.image = item.getProduct().getImage();
+    public CartItemDto(CartItem item, Product product){
+        this.productId = product.getId();
+        this.name = product.getName();
+        this.image = product.getImage();
         this.quantity = item.getQuantity();
-        this.price = item.getProduct().getPrice();
-        this.serving = item.getProduct().getServing();
+        this.price = product.getPrice();
+        this.serving = product.getServing();
         this.option = item.getOption();
 
         if ( this.name.contains("초신선") ) { productType.put("fresh",true); }
