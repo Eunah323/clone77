@@ -26,6 +26,9 @@ public class User{
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String email;
+
     @OneToOne
     private Cart cart;
 
@@ -36,10 +39,11 @@ public class User{
     private Long kakaoId;
 
 
-    public User(String username, String name, String password, int orderCount) {
+    public User(String username, String name, String password, String email, int orderCount) {
         this.username = username;
         this.name = name;
         this.password = password;
+        this.email = email;
         this.orderCount = orderCount;
         this.kakaoId = null;
 
@@ -49,15 +53,16 @@ public class User{
         this.username = requestDto.getUsername();
         this.password = requestDto.getPassword();
         this.name = requestDto.getName();
+        this.email = requestDto.getEmail();
         this.kakaoId = null;
 
     }
 
-    public User(String username, String name, Long kakaoId) {
+    public User(String username, String password, String name, String email, Long kakaoId) {
         this.username = username;
         this.name = name;
         this.password = password;
-        this.orderCount = orderCount;
+        this.email = email;
         this.kakaoId = kakaoId;
 
     }

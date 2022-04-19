@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .antMatchers("/user/**", "/api/**").permitAll()
+                .antMatchers("/user/**", "/api/**","/login.html","index.html","kauth.kakao.com/oauth/token/**").permitAll()
                 // 어떤 요청이든 '인증'
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -163,6 +163,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/user/signup");
+        skipPathList.add("POST,/**/**");
+        skipPathList.add("GET,/**/**");
+
+
 
 
         skipPathList.add("GET,/");

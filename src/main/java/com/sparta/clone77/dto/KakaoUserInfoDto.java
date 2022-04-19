@@ -8,5 +8,7 @@ import lombok.Getter;
 public class KakaoUserInfoDto {
     private Long id;
     private String name;
+    private String email;
+
 
 }

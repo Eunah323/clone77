@@ -31,6 +31,8 @@ public class UserDetailsImpl implements UserDetails {
 
 
     public String getName() {return user.getName();}
+    public String getEmail() {return user.getEmail();}
+    public Long getkakaoId() {return user.getKakaoId();}
 
 
     @Override

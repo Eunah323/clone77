@@ -10,12 +10,14 @@ public class UserRequestDto {
     private String password;
     private String passwordCheck;
     private String name;
+    private String email;
 
-    public UserRequestDto(String username, String password, String passwordCheck, String name) {
+    public UserRequestDto(String username, String password, String passwordCheck, String name, String email) {
         this.username = username;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.name = name;
+        this.email = email;
     }
 }
 

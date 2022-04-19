@@ -2,6 +2,7 @@ package com.sparta.clone77.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.sparta.clone77.dto.KakaoUserInfoDto;
 import com.sparta.clone77.security.UserDetailsImpl;
 
 
@@ -22,15 +23,22 @@ public final class JwtTokenUtils {
     public static final String CLAIM_EXPIRED_DATE = "EXPIRED_DATE";
     public static final String CLAIM_USER_NAME = "USER_NAME";
     public static final String CLAIM_NAME = "NAME";
+    public static final String CLAIM_EMAIL = "EMAIL";
+
     public static final String JWT_SECRET = "jwt_secret_!@#$%";
 
     public static String generateJwtToken(UserDetailsImpl userDetails) {
         String token = null;
+//        String kakaoId = userDetails.getkakaoId();
+//        if (kakaoId!=null){
+//
+//        }
         try {
             token = JWT.create()
                     .withIssuer("sparta")
                     .withClaim(CLAIM_USER_NAME, userDetails.getUsername())
                     .withClaim(CLAIM_NAME, userDetails.getName())
+                    .withClaim(CLAIM_EMAIL, userDetails.getEmail())
                     // 토큰 만료 일시 = 현재 시간 + 토큰 유효기간)
                     .withClaim(CLAIM_EXPIRED_DATE, new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                     .sign(generateAlgorithm());
@@ -44,4 +52,6 @@ public final class JwtTokenUtils {
     private static Algorithm generateAlgorithm() {
         return Algorithm.HMAC256(JWT_SECRET);
     }
+
+
 }
