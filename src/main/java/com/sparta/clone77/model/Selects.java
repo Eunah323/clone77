@@ -20,11 +20,11 @@ public class Selects {
 
     @JsonBackReference
     @ManyToOne
-    private OriginalProduct originalProduct;
+    private OriginalProduct originalproduct;
 
-    public Selects(String displayid, String name, OriginalProduct originalProduct) {
+    public Selects(String displayid, String name, OriginalProduct originalproduct) {
         this.displayid = displayid;
         this.name = name;
-        this.originalProduct = originalProduct;
+        this.originalproduct = originalproduct;
     }
 }
