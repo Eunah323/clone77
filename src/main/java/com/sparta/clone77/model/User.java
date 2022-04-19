@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
@@ -23,13 +24,11 @@ public class User{
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
+    @Column(nullable = false) // nullable 설정은 추후 논의가 필요합니다.
     private String email;
 
-
+    @Column(nullable = false)
+    private int orderCount;
 
     @Column(unique = true)
     private Long kakaoId;
