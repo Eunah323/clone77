@@ -8,8 +8,8 @@ public class StatusDto {
 
     private boolean status = true;
     private String http = String.valueOf(HttpStatus.OK);
-    private String message;
+    private String msg;
 
-    public StatusDto(String message) { this.message = message; }
+    public StatusDto(String msg) { this.msg = msg; }
 
 }

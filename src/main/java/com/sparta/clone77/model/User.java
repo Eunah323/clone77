@@ -1,6 +1,5 @@
 package com.sparta.clone77.model;
 
-import com.sparta.clone77.dto.UserRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

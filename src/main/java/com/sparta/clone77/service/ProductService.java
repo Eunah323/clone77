@@ -1,5 +1,6 @@
 package com.sparta.clone77.service;
 
+import com.sparta.clone77.dto.ProductDetailDto;
 import com.sparta.clone77.dto.ProductResponseDto;
 import com.sparta.clone77.model.Product;
 import com.sparta.clone77.repository.ProductRepository;
@@ -27,6 +28,12 @@ public class ProductService {
         }
 
         return responseDtos;
+    }
+
+    // 상세조회
+    public ProductDetailDto getDetail(Long productId){
+        return new ProductDetailDto(productRepository.findById(productId)
+                .orElseThrow( ()-> new NullPointerException("상품정보가 존재하지 않습니다.") ));
     }
 
 }
