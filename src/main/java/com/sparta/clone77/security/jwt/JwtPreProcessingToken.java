@@ -19,5 +19,6 @@ public class JwtPreProcessingToken extends UsernamePasswordAuthenticationToken {
                 token,
                 token.length()
         );
+        System.out.println("프리프로세싱토큰");
     }
 }

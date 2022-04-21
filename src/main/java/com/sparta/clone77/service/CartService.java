@@ -1,9 +1,6 @@
 package com.sparta.clone77.service;
 
-import com.sparta.clone77.dto.CartRequestDto;
-import com.sparta.clone77.dto.CartResponseDto;
-import com.sparta.clone77.dto.CartUpdateReqeustDto;
-import com.sparta.clone77.dto.StatusDto;
+import com.sparta.clone77.dto.*;
 import com.sparta.clone77.model.Cart;
 import com.sparta.clone77.model.CartItem;
 import com.sparta.clone77.model.Product;
@@ -68,9 +65,14 @@ public class CartService {
     // 주문완료(장바구니 전체 비우기)
     public StatusDto orderCart(UserDetailsImpl userDetails){
 
-        cartRepository
-                .findByUserId(userDetails.getUser().getId())
-                .ifPresent(cartItemRepository::deleteAllByCart);
+        Cart cart = cartRepository.findByUserId(userDetails.getUser().getId())
+                .orElseThrow(()-> new NullPointerException("사용자 없음"));
+
+        List<CartItem> cartItems = cartItemRepository.findCartItemsByCart(cart);
+
+        for (CartItem item : cartItems){
+            cartItemRepository.deleteById(item.getId());
+        }
 
         return new StatusDto("주문 및 장바구니 삭제 완료");
     }
@@ -92,15 +94,21 @@ public class CartService {
     }
 
     // 장바구니 아이템 개별 삭제
-    public StatusDto delcart(Long productId, String option, UserDetailsImpl userDetails){
-
-        CartItem cartItem = cartRepository
-                .findByUserId(userDetails.getUser().getId())
-                .map( cart -> cartItemRepository.findCartItem(productId, cart, option))
-                .orElseThrow(() -> new NullPointerException("해당 상품이 존재하지 않습니다."));
-
-        cartItemRepository.delete(cartItem);
-
+    public StatusDto delcart(Long productId, OptionDto option, UserDetailsImpl userDetails){
+        List<CartItem> cartItems = cartItemRepository.findCartItemsByCart(cartRepository.findByUserId(
+                userDetails.getUser().getId()).orElseThrow(() -> new NullPointerException("회원정보가 없습니다.")));
+        for( CartItem item : cartItems ){
+            if ( item.getOptions().equals(option.getOption()) ){
+                cartItemRepository.delete(item);
+            }
+        }
+//        CartItem cartItem = cartRepository
+//                .findByUserId(userDetails.getUser().getId())
+//                .map( cart -> cartItemRepository.findCartItem(productId, cart, option.getOption()))
+//                .orElseThrow(() -> new NullPointerException("해당 상품이 존재하지 않습니다."));
+//
+//        cartItemRepository.delete(cartItem);
+//
         return new StatusDto("아이템 삭제 완료");
     }
 

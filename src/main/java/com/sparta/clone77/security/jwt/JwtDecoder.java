@@ -57,6 +57,7 @@ public class JwtDecoder {
         String name = decodedJWT
                 .getClaim(CLAIM_NAME)
                 .asString();
+        System.out.println("디코더디코더디코더디코더디코더디코더");
 
         return name;
 
