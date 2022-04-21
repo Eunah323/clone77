@@ -30,6 +30,8 @@ public final class JwtTokenUtils {
 
     public static String generateJwtToken(UserDetailsImpl userDetails) {
         String token = null;
+        System.out.println("토큰유틸즈");
+
 
         try {
             token = JWT.create()
