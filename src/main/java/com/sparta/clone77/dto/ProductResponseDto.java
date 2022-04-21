@@ -4,31 +4,31 @@ import com.sparta.clone77.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
 public class ProductResponseDto {
 
     private Long productId;
-    private boolean productType = false;
+    private Map<String, Boolean> productType = new HashMap<>();
     private int price;
     private String serving;
     private String name;
-    private List<String> imageFile = new ArrayList<>();
-    private List<String> optionList = new ArrayList<>();
+    private String image;
+    private List<String> option = new ArrayList<>();
 
     public ProductResponseDto(Product product){
         this.productId = product.getId();
-        if (product.getName().contains("무항생제")){ this.productType = true; }
         this.price = product.getPrice();
         this.serving = product.getServing();
         this.name = product.getName();
-        // product.getSelector와 image를 배열로 만들기
-        this.imageFile.addAll(Arrays.asList(product.getImage().split(";")));
-        this.optionList.addAll(Arrays.asList(product.getSelector().split(";")));
+        this.image = product.getImage();
+        this.option.addAll(Arrays.asList(product.getSelector().split(";")));
+        if ( this.name.contains("초신선") ) { productType.put("fresh",true); }
+        else { productType.put("fresh",false); }
+        if ( this.name.contains("무항생") ) { productType.put("zero",true); }
+        else { productType.put("zero",false); }
     }
 
 }

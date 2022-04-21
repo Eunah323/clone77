@@ -35,4 +35,14 @@ public class Product {
     @Column
     private String serving;
 
+    public Product(ProductClone clone){
+        this.name = clone.getName();
+        this.price = clone.getPrice();
+        this.content = "준비중";
+        this.image = clone.getImage();
+        this.selector = clone.getSelector();
+        this.category = clone.getCategory();
+        this.serving = clone.getServing();
+    }
+
 }

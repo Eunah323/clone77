@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class CartUpdateReqeustDto {
 
     private Long productId;
+    private String options;
     private boolean operator;
 
 }
