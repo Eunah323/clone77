@@ -28,15 +28,26 @@ public class CartService {
     private final ProductRepository productRepository;
 
     // 장바구니 추가
+    @Transactional
     public StatusDto addCart(CartRequestDto requestDto, UserDetailsImpl userDetails){
 
         // 장바구니 확인과 생성
         Optional<Cart> optionalCart = cartRepository.findByUserId(userDetails.getUser().getId());
-        Cart cart;
-        cart = optionalCart.orElseGet(() -> cartRepository.save(new Cart(userDetails.getUser())));
+        Cart cart = optionalCart.orElseGet(() -> cartRepository.save(new Cart(userDetails.getUser())));
 
-        //장바구니 내에 아이템 추가 및 반환
-        cartItemRepository.save(new CartItem(cart, requestDto));
+        // 아이템의 product id, cart, option이 동일한 경우에는 수량을 추가해 줘야함
+        CartItem cartItems = cartItemRepository.findCartItem(requestDto.getProductId(), cart, requestDto.getOption());
+
+        try
+        {
+            cartItems.getCart();
+            cartItems.add(requestDto.getQuantity());
+        }
+        catch (Exception e)
+        {
+            //장바구니 내에 아이템 추가
+            cartItemRepository.save(new CartItem(cart, requestDto));
+        }
         return new StatusDto("장바구니에 상품 추가 완료");
     }
 
@@ -49,7 +60,7 @@ public class CartService {
         for ( CartItem item : cart.getCartItems() ){
             products.add(productRepository
                     .findById(item.getProductId())
-                            .orElseThrow( () -> new NullPointerException("상품정보가 없습니다.")));
+                    .orElseThrow( () -> new NullPointerException("상품정보가 없습니다.")));
         }
         return new CartResponseDto(cart, products, userDetails.getUser().getOrderCount());
     }
@@ -70,7 +81,7 @@ public class CartService {
 
         CartItem cartItem = cartRepository
                 .findByUserId(userDetails.getUser().getId())
-                .map(cart -> cartItemRepository.findCartItem(reqeustDto.getProductId(), cart))
+                .map(cart -> cartItemRepository.findCartItem(reqeustDto.getProductId(), cart, reqeustDto.getOptions()))
                 .orElseThrow(() -> new NullPointerException("해당 상품이 존재하지 않습니다."));
 
         if (cartItem.getQuantity() > 0) {
@@ -81,11 +92,11 @@ public class CartService {
     }
 
     // 장바구니 아이템 개별 삭제
-    public StatusDto delcart(Long productId, UserDetailsImpl userDetails){
+    public StatusDto delcart(Long productId, String option, UserDetailsImpl userDetails){
 
         CartItem cartItem = cartRepository
                 .findByUserId(userDetails.getUser().getId())
-                .map( cart -> cartItemRepository.findCartItem(productId, cart))
+                .map( cart -> cartItemRepository.findCartItem(productId, cart, option))
                 .orElseThrow(() -> new NullPointerException("해당 상품이 존재하지 않습니다."));
 
         cartItemRepository.delete(cartItem);

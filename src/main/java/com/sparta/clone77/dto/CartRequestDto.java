@@ -6,6 +6,7 @@ import lombok.Getter;
 public class CartRequestDto {
 
     private Long productId;
+    private int quantity;
     private String option;
 
 }

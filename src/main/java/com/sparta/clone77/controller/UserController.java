@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.clone77.dto.LoginResponseDto;
 import com.sparta.clone77.dto.UserRequestDto;
 import com.sparta.clone77.model.User;
-import com.sparta.clone77.repository.UserRepository;
 import com.sparta.clone77.security.UserDetailsImpl;
-import com.sparta.clone77.security.jwt.JWTAuthProvider;
-import com.sparta.clone77.security.jwt.JwtTokenUtils;
 import com.sparta.clone77.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,12 +43,12 @@ public class UserController {
 
         String is_login = "true";
         String username = userDetails.getUsername();
-        String nickname = userDetails.getName();
-        return new LoginResponseDto(is_login,username, nickname);
+        String name = userDetails.getName();
+        return new LoginResponseDto(is_login,username, name);
     }
 
 //    @GetMapping("/user/kakao/callback")
-//    public String kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+//    public User kakaoLogin(@RequestParam String code) throws JsonProcessingException {
 //        // authorizedCode: 카카오 서버로부터 받은 인가 코드
 //
 //

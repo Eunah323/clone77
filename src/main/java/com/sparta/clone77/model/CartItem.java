@@ -23,16 +23,16 @@ public class CartItem {
     private Long productId;
 
     @Column(nullable = false)
-    private int quantity = 0;
+    private int quantity;
 
     @Column(nullable = false)
-    private String option;
+    private String options;
 
     public CartItem(Cart cart, CartRequestDto requestDto) {
         this.cart = cart;
         this.productId = requestDto.getProductId();
-        this.option = requestDto.getOption();
-        this.quantity++;
+        this.options = requestDto.getOption();
+        this.quantity = requestDto.getQuantity();
     }
 
     public void update(CartUpdateReqeustDto reqeustDto){
@@ -40,4 +40,7 @@ public class CartItem {
         else { this.quantity--; }
     }
 
+    public void add(int add){
+        this.quantity = this.quantity + add;
+    }
 }

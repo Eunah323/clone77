@@ -20,7 +20,7 @@ public class Cart {
     private Long userId;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<CartItem> cartItems = new ArrayList<>();
+    private List<CartItem> cartItems;
 
     public Cart(User user){
         userId = user.getId();

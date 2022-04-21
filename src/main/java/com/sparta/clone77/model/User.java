@@ -50,14 +50,14 @@ public class User{
 
     public User(UserRequestDto requestDto) {
         this.username = requestDto.getUsername();
-        this.password = requestDto.getPassword();
         this.name = requestDto.getName();
+        this.password = requestDto.getPassword();
         this.email = requestDto.getEmail();
         this.kakaoId = null;
 
     }
 
-    public User(String username, String password, String name, String email, Long kakaoId) {
+    public User(String username, String name, String password, String email, Long kakaoId) {
         this.username = username;
         this.name = name;
         this.password = password;
