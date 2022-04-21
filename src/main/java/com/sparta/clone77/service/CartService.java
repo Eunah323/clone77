@@ -4,8 +4,8 @@ import com.sparta.clone77.dto.*;
 import com.sparta.clone77.model.Cart;
 import com.sparta.clone77.model.CartItem;
 import com.sparta.clone77.model.Product;
-import com.sparta.clone77.repository.CartItemRepository;
 import com.sparta.clone77.repository.CartRepository;
+import com.sparta.clone77.repository.CartItemRepository;
 import com.sparta.clone77.repository.ProductRepository;
 import com.sparta.clone77.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -98,7 +98,7 @@ public class CartService {
         List<CartItem> cartItems = cartItemRepository.findCartItemsByCart(cartRepository.findByUserId(
                 userDetails.getUser().getId()).orElseThrow(() -> new NullPointerException("회원정보가 없습니다.")));
         for( CartItem item : cartItems ){
-            if ( item.getOptions().equals(option.getOption()) ){
+            if ( item.getOptions().equals(option) ){
                 cartItemRepository.delete(item);
             }
         }
