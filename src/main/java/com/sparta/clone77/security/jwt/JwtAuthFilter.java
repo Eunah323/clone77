@@ -23,10 +23,13 @@ public class JwtAuthFilter extends AbstractAuthenticationProcessingFilter {
     public JwtAuthFilter(
             RequestMatcher requiresAuthenticationRequestMatcher,
             HeaderTokenExtractor extractor
+
     ) {
         super(requiresAuthenticationRequestMatcher);
 
         this.extractor = extractor;
+        System.out.println("제이더블유티어스필터");
+
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.sparta.clone77.controller;
 
-import com.sparta.clone77.dto.CartRequestDto;
-import com.sparta.clone77.dto.CartResponseDto;
-import com.sparta.clone77.dto.CartUpdateReqeustDto;
-import com.sparta.clone77.dto.StatusDto;
+import com.sparta.clone77.dto.*;
 import com.sparta.clone77.security.UserDetailsImpl;
 import com.sparta.clone77.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +40,9 @@ public class CartController {
     }
 
     // 장바구니 개별 삭제
-    @DeleteMapping("/cart/{productId}")
+    @PutMapping ("/cart/{productId}")
     public StatusDto delCart(@PathVariable Long productId,
-                             @RequestBody String option,
+                             @RequestBody OptionDto option,
                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cartService.delcart(productId, option, userDetails);
     }
