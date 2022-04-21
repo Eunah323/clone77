@@ -10,6 +10,7 @@ import com.sparta.clone77.dto.KakaoUserInfoDto;
 import com.sparta.clone77.model.User;
 import com.sparta.clone77.repository.UserRepository;
 import com.sparta.clone77.security.UserDetailsImpl;
+import com.sparta.clone77.security.auth.FormLoginSuccessHandler;
 import com.sparta.clone77.security.jwt.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -37,7 +38,7 @@ public class KakaoUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void kakaoLogin(String code) throws JsonProcessingException {
+    public ResponseEntity<?> kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
         System.out.println(accessToken);
@@ -49,7 +50,16 @@ public class KakaoUserService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리
-        forceLogin(kakaoUser);
+//        forceLogin(kakaoUser);
+        // 4. 강제 로그인 처리
+        String token= forceLogin(kakaoUser);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("token",token);
+
+        return  ResponseEntity.ok()
+                .headers(headers)
+                .body("카카오로그인되었습니다.");
     }
 
     public String getAccessToken(String code) throws JsonProcessingException {
@@ -137,6 +147,8 @@ return kakaoUser;
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = JwtTokenUtils.generateJwtToken(new UserDetailsImpl(kakaoUser));
+//        ResponseEntity.ok().header(FormLoginSuccessHandler.AUTH_HEADER, FormLoginSuccessHandler.TOKEN_TYPE + " " + token);
+        System.out.println(token);
         return token;
 
     }

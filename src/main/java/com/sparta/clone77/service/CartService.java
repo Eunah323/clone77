@@ -98,8 +98,8 @@ public class CartService {
         List<CartItem> cartItems = cartItemRepository.findCartItemsByCart(cartRepository.findByUserId(
                 userDetails.getUser().getId()).orElseThrow(() -> new NullPointerException("회원정보가 없습니다.")));
         for( CartItem item : cartItems ){
-            if ( item.getOptions().equals(option) ){
-                cartItemRepository.delete(item);
+            if ( item.getOptions().equals(option.getOption()) ){
+                cartItemRepository.deleteById(item.getId());
             }
         }
 //        CartItem cartItem = cartRepository
