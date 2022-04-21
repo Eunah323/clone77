@@ -1,8 +1,9 @@
 package com.sparta.clone77.dto;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-
+@Getter
 @NoArgsConstructor
 public class StatusDto {
 

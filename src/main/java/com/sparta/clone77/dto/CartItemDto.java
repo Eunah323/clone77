@@ -27,7 +27,7 @@ public class CartItemDto {
         this.quantity = item.getQuantity();
         this.price = product.getPrice();
         this.serving = product.getServing();
-        this.option = item.getOption();
+        this.option = item.getOptions();
 
         if ( this.name.contains("초신선") ) { productType.put("fresh",true); }
         else { productType.put("fresh",false); }

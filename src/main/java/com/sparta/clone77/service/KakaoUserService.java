@@ -10,7 +10,6 @@ import com.sparta.clone77.dto.KakaoUserInfoDto;
 import com.sparta.clone77.model.User;
 import com.sparta.clone77.repository.UserRepository;
 import com.sparta.clone77.security.UserDetailsImpl;
-import com.sparta.clone77.security.jwt.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,8 +59,8 @@ public class KakaoUserService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "c4f01d9a0b79af30e7fa9225a1419b3b");
-        body.add("redirect_uri", "http://localhost:3000/user/kakao/callback”");
+        body.add("client_id", "71efb2f9c2399430c5f4fdfe1623de38");
+        body.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -128,39 +127,21 @@ public class KakaoUserService {
             kakaoUser = new User(name, name,encodedPassword, email, kakaoId);
             userRepository.save(kakaoUser);
         }
-
+        String token = JWT.create()
+                .withSubject("JwtToken")
+                .withExpiresAt(new Date(System.currentTimeMillis()))
+                .withClaim("username", kakaoUserInfo.getName())
+                .withClaim("name", kakaoUserInfo.getName())
+                .withClaim("email", kakaoUserInfo.getEmail())
+                .sign(Algorithm.HMAC256("jwt_secret_!@#$%"));
+ResponseEntity.ok().header(token);
+        System.out.println(token);
 return kakaoUser;
     }
 
-    public String forceLogin(User kakaoUser) {
+    private void forceLogin(User kakaoUser) {
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = JwtTokenUtils.generateJwtToken(new UserDetailsImpl(kakaoUser));
-        return token;
-
     }
-//    public String getToken(KakaoUserInfoDto kakaoUserInfo){
-//        String token = JWT.create()
-//                .withSubject("JwtToken")
-//                .withExpiresAt(new Date(System.currentTimeMillis()))
-//                .withClaim("username", kakaoUserInfoDto.getName())
-//                .withClaim("name", kakaoUserInfoDto.getName())
-//                .withClaim("email", kakaoUserInfoDto.getEmail())
-//                .sign(Algorithm.HMAC256("jwt_secret_!@#$%"));
-//        ResponseEntity.ok().header(token);
-//        System.out.println(token);
-//
-//        String token = JWT.create()
-//                .withSubject("JwtToken")
-//                .withClaim(JwtTokenUtils.CLAIM_EXPIRED_DATE, new Date(System.currentTimeMillis() + (1 * 60 * 60 * 24 * 3 * 1000)))
-//                .withClaim("USER_NAME", kakaoUserInfo.getName())
-//                .withClaim("NAME", kakaoUserInfo.getName())
-//                .withClaim("EMAIL", kakaoUserInfo.getEmail())
-//                .sign(Algorithm.HMAC256("jwt_secret_!@#$%"));
-//        ResponseEntity.ok().header(token);
-//        System.out.println(token);
-//        return token;
-//    }
-
 }

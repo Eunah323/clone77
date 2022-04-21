@@ -7,6 +7,7 @@ import com.sparta.clone77.security.auth.FormLoginSuccessHandler;
 import com.sparta.clone77.security.jwt.JWTAuthProvider;
 import com.sparta.clone77.security.jwt.JwtAuthFilter;
 import com.sparta.clone77.security.jwt.HeaderTokenExtractor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -67,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/h2-console/**");
+        web.ignoring().antMatchers("kapi.kakao.com/v2/user/me");
     }
 
     @Override
@@ -90,7 +92,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .antMatchers("/user/**", "/api/**").permitAll()
+                .antMatchers("/user/**/**", "/api/**","/").permitAll()
+                .antMatchers("/**").permitAll()
+
                 // 어떤 요청이든 '인증'
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -119,6 +123,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop");
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop:8080");
         configuration.addAllowedOrigin("http://dogfootdogfoot.shop:3000");
+        configuration.addAllowedOrigin("https://kauth.kakao.com/oauth/authorize");
+        configuration.addAllowedOrigin("https://kauth.kakao.com/oauth/token");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
@@ -164,8 +170,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/user/signup");
 
+        //소셜로그인관련
+        skipPathList.add("POST,/user/kakao/callback");
+        skipPathList.add("GET,/user/kakao/callback");
+
+        skipPathList.add("GET,/user/kakao/callback");
+
+
+
 
         skipPathList.add("GET,/");
+        skipPathList.add("GET,/api/products/**");
+        skipPathList.add("GET,/api/products");
         skipPathList.add("GET,/basic.js");
 
         skipPathList.add("GET,/articles");

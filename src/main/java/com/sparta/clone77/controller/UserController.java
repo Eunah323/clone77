@@ -1,12 +1,10 @@
 package com.sparta.clone77.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sparta.clone77.dto.KakaoUserInfoDto;
 import com.sparta.clone77.dto.LoginResponseDto;
 import com.sparta.clone77.dto.UserRequestDto;
 import com.sparta.clone77.model.User;
 import com.sparta.clone77.security.UserDetailsImpl;
-import com.sparta.clone77.service.KakaoUserService;
 import com.sparta.clone77.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,6 @@ import java.util.Map;
 @RestController
 public class UserController {
     private final UserService userService;
-    private final KakaoUserService kakaoUserService;
 
 
 
@@ -50,13 +47,13 @@ public class UserController {
         return new LoginResponseDto(is_login,username, name);
     }
 
-    @GetMapping("/user/kakao/callback")
-    public String kakaoLogin(User kakaoUser) throws JsonProcessingException {
-        // authorizedCode: 카카오 서버로부터 받은 인가 코드
-
-
-        return kakaoUserService.forceLogin(kakaoUser);
-    }
+//    @GetMapping("/user/kakao/callback")
+//    public User kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+//        // authorizedCode: 카카오 서버로부터 받은 인가 코드
+//
+//
+//        return userService.kakaoLogin(code);
+//    }
 
 
 }
