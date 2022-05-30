@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
@@ -18,15 +17,32 @@ public class Product {
     private String name;
 
     @Column
-    private String image;
+    private int price;
 
     @Column
     private String content;
 
-    @Column
-    private int price; // price는 int 자료형
+    @Column(columnDefinition = "TEXT")
+    private String image;
 
-    @OneToMany(mappedBy = "product")
-    private List<Option> options;
+    @Column
+    private String selector;
+
+    // 정보제공을 위해서는 카테코리와 서빙에 대한 자료가 필요하여 추가하였습니다.
+    @Column
+    private String category;
+
+    @Column
+    private String serving;
+
+    public Product(ProductClone clone){
+        this.name = clone.getName();
+        this.price = clone.getPrice();
+        this.content = "준비중";
+        this.image = clone.getImage();
+        this.selector = clone.getSelector();
+        this.category = clone.getCategory();
+        this.serving = clone.getServing();
+    }
 
 }

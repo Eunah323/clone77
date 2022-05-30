@@ -27,24 +27,43 @@ public class User{
     @Column(nullable = false)
     private String password;
 
-    @OneToOne
-    private Cart cart;
 
-    @Formula("(select count(1) from orders ordercount where ordercount.user_id = id)")
+    @Column(nullable = false) // nullable 설정은 추후 논의가 필요합니다.
+    private String email;
+
+    @Column(nullable = false)
     private int orderCount;
 
+    @Column(unique = true)
+    private Long kakaoId;
 
-    public User(String username, String name, String password, int orderCount) {
+
+    public User(String username, String name, String password, String email, int orderCount) {
         this.username = username;
         this.name = name;
         this.password = password;
+        this.email = email;
         this.orderCount = orderCount;
+        this.kakaoId = null;
+
     }
 
     public User(UserRequestDto requestDto) {
         this.username = requestDto.getUsername();
-        this.password = requestDto.getPassword();
         this.name = requestDto.getName();
+        this.password = requestDto.getPassword();
+        this.email = requestDto.getEmail();
+        this.kakaoId = null;
+
+    }
+
+    public User(String username, String name, String password, String email, Long kakaoId) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.kakaoId = kakaoId;
+
     }
 
 }

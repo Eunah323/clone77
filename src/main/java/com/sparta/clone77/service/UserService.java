@@ -1,15 +1,34 @@
 package com.sparta.clone77.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.clone77.dto.KakaoUserInfoDto;
 import com.sparta.clone77.dto.UserRequestDto;
 import com.sparta.clone77.model.User;
 import com.sparta.clone77.repository.UserRepository;
+import com.sparta.clone77.security.UserDetailsImpl;
+import com.sparta.clone77.security.jwt.JwtPreProcessingToken;
+import com.sparta.clone77.security.jwt.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 
@@ -38,13 +57,13 @@ public class UserService {
             throw new IllegalArgumentException("중복된 아이디 입니다.");
         } else if (!Pattern.matches(pattern, username)) {
             throw new IllegalArgumentException("영문, 숫자로만 입력하세요");
-        }  else if (!Pattern.matches(pattern2,password)) {
+        } else if (!Pattern.matches(pattern2, password)) {
             throw new IllegalArgumentException("비밀변호는 대소문자숫자특수문자를 포함해야합니다");
         } else if (password.length() < 8) {
             throw new IllegalArgumentException("비밀번호를 8자 이상 입력하세요");
         } else if (password.contains(username)) {
             throw new IllegalArgumentException("비밀번호에 ID를 포함할 수 없습니다.");
-        }   else if (!passwordCheck.equals(password)) {
+        } else if (!passwordCheck.equals(password)) {
             throw new IllegalArgumentException("비밀번호와 정확히 일치하게 작성해주세요");
         } else if (name.length() < 1) {
             throw new IllegalArgumentException("이름을 입력하세요");
@@ -54,10 +73,11 @@ public class UserService {
         requestDto.setPassword(password);
 
 
-
         User user = new User(requestDto);
 
         return userRepository.save(user);
+
+
     }
 
 

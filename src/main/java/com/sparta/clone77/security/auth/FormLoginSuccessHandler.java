@@ -1,3 +1,5 @@
+
+
 package com.sparta.clone77.security.auth;
 
 
@@ -18,8 +20,10 @@ public class FormLoginSuccessHandler extends SavedRequestAwareAuthenticationSucc
                                         final Authentication authentication) {
         final UserDetailsImpl userDetails = ((UserDetailsImpl) authentication.getPrincipal());
         // Token 생성
+        System.out.println("폼로그인석세스핸들러");
         final String token = JwtTokenUtils.generateJwtToken(userDetails);
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);
+
     }
 
 }
